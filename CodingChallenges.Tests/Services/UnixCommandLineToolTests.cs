@@ -1,6 +1,7 @@
 ﻿using CodingChallenges.Library.Contracts;
 using CodingChallenges.Library.Models;
 using CodingChallenges.Library.Services;
+using CodingChallenges.Tests.Properties;
 using Moq;
 
 namespace CodingChallenges.Tests.Services;
@@ -38,5 +39,16 @@ public class UnixCommandLineToolTests
         var result = sut.Apply(command);
 
         Assert.AreEqual("7145 test.txt", result);
+    }
+
+    [TestMethod("Get the number of words in a file")]
+    public void Test03()
+    {
+        var command = new Command("ccwc -w test.txt");
+        fs.Setup(it => it.ReadAllText("test.txt")).Returns(Resources.test);
+
+        var result = sut.Apply(command);
+
+        Assert.AreEqual("58164 test.txt", result);
     }
 }

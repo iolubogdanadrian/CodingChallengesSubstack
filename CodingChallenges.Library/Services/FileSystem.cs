@@ -7,6 +7,9 @@ public class FileSystem : IFileSystem
     public FileInfo ReadFile(string fileName) =>
         new(fileName);
 
+    public string ReadAllText(string path) =>
+        File.ReadAllText(path);
+
     public long GetBytes(string filename) =>
         new FileInfo(filename).Length;
 

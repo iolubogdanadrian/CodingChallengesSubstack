@@ -26,6 +26,12 @@ public class UnixCommandService
             return $"{numberOfLines} {command.FileName}";
         }
 
+        if (command.Option == Constants.OPTION_NUMBER_OF_WORDS)
+        {
+            var words = fs.ReadAllText(command.FileName).Split(new[] {' ', '\t', '\n', '\r'}, StringSplitOptions.RemoveEmptyEntries);
+            return $"{words.Length} {command.FileName}";
+        }
+
         return "";
     }
 
