@@ -2,8 +2,6 @@
 
 public record Command(string Text)
 {
-    // public FileInfo? File { get; set; }
-
     public string[] Parts => Text.Split(' ');
 
     public string Syntax => Parts[0];
