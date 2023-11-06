@@ -14,37 +14,48 @@ public class UnixCommandService : IUnixCommandService
     {
         command.VerifyCommand();
 
-        return command.Option switch
+        var data = command.Option switch
         {
             Constants.OPTION_NUMBER_OF_BYTES => HandleNumberOfBytes(),
             Constants.OPTION_NUMBER_OF_LINES => HandleNumberOfLines(),
             Constants.OPTION_NUMBER_OF_WORDS => HandleNumberOfWords(),
             Constants.OPTION_NUMBER_OF_CHARACTERS => HandleNumberOfCharacters(),
+            "" => HandleNoOptionIsProvided(),
             _ => "",
         };
+
+        return $"{data} {command.FileName}";
 
         string HandleNumberOfBytes()
         {
             var bytesFromFile = fs.GetBytes(command.FileName);
-            return $"{bytesFromFile} {command.FileName}";
+            return bytesFromFile + "";
         }
 
         string HandleNumberOfLines()
         {
             var numberOfLines = fs.GetNumberOfLines(command.FileName);
-            return $"{numberOfLines} {command.FileName}";
+            return numberOfLines + "";
         }
 
         string HandleNumberOfWords()
         {
             var words = fs.ReadAllText(command.FileName).Split(new[] {' ', '\t', '\n', '\r'}, StringSplitOptions.RemoveEmptyEntries);
-            return $"{words.Length} {command.FileName}";
+            return words.Length + "";
         }
 
         string HandleNumberOfCharacters()
         {
             var characters = fs.ReadAllText(command.FileName).Length;
-            return $"{characters} {command.FileName}";
+            return characters + "";
+        }
+
+        string HandleNoOptionIsProvided()
+        {
+            var numberOfBytes = HandleNumberOfBytes();
+            var numberOfLines = HandleNumberOfLines();
+            var numberOfWords = HandleNumberOfWords();
+            return $"{numberOfLines}   {numberOfWords}  {numberOfBytes}";
         }
     }
 

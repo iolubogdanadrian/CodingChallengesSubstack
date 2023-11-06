@@ -1,5 +1,7 @@
 ﻿using CodingChallenges.Library.Contracts;
 
+#pragma warning disable CS0168 // Variable is declared but never used
+
 namespace CodingChallenges.Library.Services;
 
 public class SafeFileSystemDecorator : IFileSystem
@@ -15,7 +17,7 @@ public class SafeFileSystemDecorator : IFileSystem
         {
             return decorated.ReadFile(fileName);
         }
-        catch
+        catch (Exception ex)
         {
             return new FileInfo(fileName);
         }
@@ -27,7 +29,7 @@ public class SafeFileSystemDecorator : IFileSystem
         {
             return decorated.ReadAllText(path);
         }
-        catch
+        catch (Exception ex)
         {
             return "";
         }
@@ -39,7 +41,7 @@ public class SafeFileSystemDecorator : IFileSystem
         {
             return decorated.GetBytes(filename);
         }
-        catch
+        catch (Exception ex)
         {
             return 0;
         }
@@ -51,7 +53,7 @@ public class SafeFileSystemDecorator : IFileSystem
         {
             return decorated.GetNumberOfLines(fileName);
         }
-        catch
+        catch (Exception ex)
         {
             return 0;
         }
