@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CodingChallenges.ConverterJson\CodingChallenges.ConverterJson.csproj" />
     <ProjectReference Include="..\CodingChallenges.Library\CodingChallenges.Library.csproj" />
   </ItemGroup>
 
