@@ -26,4 +26,10 @@
     <ProjectReference Include="..\CodingChallenges.Library\CodingChallenges.Library.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Resources\test.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

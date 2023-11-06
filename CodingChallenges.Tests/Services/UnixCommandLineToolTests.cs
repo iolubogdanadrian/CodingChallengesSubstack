@@ -1,4 +1,5 @@
-﻿using CodingChallenges.Library.Contracts;
+﻿using System.Globalization;
+using CodingChallenges.Library.Contracts;
 using CodingChallenges.Library.Models;
 using CodingChallenges.Library.Services;
 using CodingChallenges.Tests.Properties;
@@ -16,6 +17,8 @@ public class UnixCommandLineToolTests
     // ReSharper disable once ConvertConstructorToMemberInitializers
     public UnixCommandLineToolTests()
     {
+        var japaneseCulture = CultureInfo.GetCultureInfo("en-US");
+        CultureInfo.CurrentCulture = japaneseCulture;
         sut = new UnixCommandService(fs.Object);
     }
 
@@ -50,5 +53,16 @@ public class UnixCommandLineToolTests
         var result = sut.Apply(command);
 
         Assert.AreEqual("58164 test.txt", result);
+    }
+
+    [TestMethod("Get the number of characters in a file")]
+    public void Test04()
+    {
+        var command = new Command("ccwc -m test.txt");
+        fs.Setup(it => it.ReadAllText("test.txt")).Returns(Resources.test);
+
+        var result = sut.Apply(command);
+
+        Assert.AreEqual("339291 test.txt", result);
     }
 }
