@@ -99,4 +99,15 @@ public class JsonValidTests
         Assert.IsTrue(result.Success);
         Assert.AreEqual("{\"key1\":true,\"key2\":false,\"key3\":null,\"key4\":\"value\",\"key5\":101}", result.Value.GetData() + "");
     }
+
+    [TestMethod("Parse array type")]
+    public void Test10()
+    {
+        const string json = "{\"key1\": []}";
+
+        var result = sut.Parse(json);
+
+        Assert.IsTrue(result.Success);
+        Assert.AreEqual("{\"key1\":[]}", result.Value.GetData() + "");
+    }
 }

@@ -1,4 +1,5 @@
-﻿using CodingChallenges.ConverterJson.Models;
+﻿using System.Collections.Immutable;
+using CodingChallenges.ConverterJson.Models;
 using Pidgin;
 using static Pidgin.Parser;
 using static Pidgin.Parser<char>;
@@ -12,20 +13,18 @@ public class JsonParser
     public Result<char, Json> Parse(string input) => JsonInternal()
         .Parse(input);
 
-    //
     //TODO: AM RAMAS LA STEP 4
-    //todo:test for array
-    private Parser<char, Json> JsonInternal() =>
-        JsonStringType()
-            .Or(Rec(JsonBoolType))
-            .Or(Rec(JsonIntType))
-            .Or(Rec(JsonNullType))
-            .Or(Rec(JsonObjectType));
+    //TODO: test for array
+    private Parser<char, Json> JsonInternal() => JsonStringType()
+        .Or(Rec(JsonArrayType))
+        .Or(Rec(JsonBoolType))
+        .Or(Rec(JsonIntType))
+        .Or(Rec(JsonNullType))
+        .Or(Rec(JsonObjectType));
 
-    private Parser<char, Json> JsonStringType() =>
-        StringToken()
-            .Select<Json>(s => new JsonString(s))
-            .Labelled("JsonStringType");
+    private Parser<char, Json> JsonStringType() => StringToken()
+        .Select<Json>(s => new JsonString(s))
+        .Labelled("JsonStringType");
 
     private Parser<char, Json> JsonBoolType() => BoolToken()
         .Select(it => (Json) new JsonBool(it))
@@ -33,26 +32,31 @@ public class JsonParser
 
     private Parser<char, Json> JsonIntType() => IntToken()
         .Select(it => (Json) new JsonInt(it))
-        .Labelled("JsonBoolType");
+        .Labelled("JsonIntType");
 
     private Parser<char, Json> JsonNullType() => NullToken()
         .Select(_ => (Json) new JsonNull())
         .Labelled("JsonNullType");
 
-    private Parser<char, Json> JsonObjectType() =>
-        MembersTokens()
-            .Between(SkipWhitespaces)
-            .Separated(Comma)
-            .Between(LeftBrace, RightBrace)
-            .Select(CreateJsonObject)
-            .Labelled("JsonObjectType");
+    private Parser<char, Json> JsonObjectType() => MembersTokens()
+        .Between(SkipWhitespaces)
+        .Separated(Comma)
+        .Between(LeftBrace, RightBrace)
+        .Select(CreateJsonObject)
+        .Labelled("JsonObjectType");
+
+    private Parser<char, Json> JsonArrayType() => JsonInternal()
+        .Between(SkipWhitespaces)
+        .Separated(Comma)
+        .Between(LeftBracket, RightBracket)
+        .Select<Json>(it => new JsonArray(it.ToImmutableArray()))
+        .Labelled("JsonArrayType");
 
     //
 
-    private Parser<char, string> StringToken() =>
-        Token(c => c != '"')
-            .ManyString()
-            .Between(Quote);
+    private Parser<char, string> StringToken() => Token(c => c != '"')
+        .ManyString()
+        .Between(Quote);
 
     private static Parser<char, bool> BoolToken()
     {
