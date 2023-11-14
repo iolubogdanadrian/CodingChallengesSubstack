@@ -2,5 +2,5 @@
 
 public class JsonNull : Json
 {
-    public override object GetData() => throw new NotImplementedException();
+    public override object GetData() => "null";
 }

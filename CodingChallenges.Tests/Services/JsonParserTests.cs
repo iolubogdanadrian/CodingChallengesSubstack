@@ -69,6 +69,17 @@ public class JsonParserTests
             Assert.IsTrue(result.Success);
             Assert.AreEqual("{\"key1\":true,\"key2\":false}", result.Value.GetData() + "");
         }
+
+        [TestMethod("Parse null type")]
+        public void Test7()
+        {
+            const string json = "{\"key1\":null}";
+
+            var result = sut.Parse(json);
+
+            Assert.IsTrue(result.Success);
+            Assert.AreEqual("{\"key1\":null}", result.Value.GetData() + "");
+        }
     }
 
     [TestClass]

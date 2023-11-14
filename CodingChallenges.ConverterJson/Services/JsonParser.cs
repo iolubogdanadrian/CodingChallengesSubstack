@@ -15,7 +15,10 @@ public class JsonParser
     //
 
     private Parser<char, Json> JsonInternal() =>
-        JsonStringType().Or(Rec(JsonBoolType)).Or(Rec(JsonObjectType));
+        JsonStringType()
+            .Or(Rec(JsonBoolType))
+            .Or(Rec(JsonNullType))
+            .Or(Rec(JsonObjectType));
 
     private Parser<char, Json> JsonStringType() =>
         StringToken()
@@ -24,6 +27,10 @@ public class JsonParser
 
     private Parser<char, Json> JsonBoolType() => BoolToken()
         .Select(it => (Json) new JsonBool(it))
+        .Labelled("JsonBoolType");
+
+    private Parser<char, Json> JsonNullType() => NullToken()
+        .Select(_ => (Json) new JsonNull())
         .Labelled("JsonBoolType");
 
     private Parser<char, Json> JsonObjectType() =>
@@ -50,19 +57,29 @@ public class JsonParser
 
     private static Parser<char, bool> BoolToken()
     {
-        var @true = Literal("true", true);
-        var @false = Literal("false", false);
+        var @true = LiteralBool("true", true);
+        var @false = LiteralBool("false", false);
         return OneOf(@true, @false);
     }
 
-    private static Parser<char, bool> Literal(string literal, bool value)
-        => Map(_ => value, String(literal));
+    private static Parser<char, object?> NullToken()
+    {
+        var nullType = LiteralObject("null", null);
+        return OneOf(nullType);
+    }
 
     private Parser<char, KeyValuePair<string, Json>> MembersTokens() => StringToken()
         .Before(ColonWhitespace())
         .Then(JsonInternal(), (name, value) => new KeyValuePair<string, Json>(name, value));
 
     //
+
+    private static Parser<char, object?> LiteralObject(string literal, object? value)
+        => Map(_ => value, String(literal));
+
+    private static Parser<char, bool> LiteralBool(string literal, bool value)
+        => Map(_ => value, String(literal));
+
 
     private static readonly List<char> EscapeChars = new() {'\"', '\\', 'b', 'f', 'n', 'r', 't'};
 
