@@ -10,4 +10,8 @@
     <PackageReference Include="Pidgin" Version="3.2.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CodingChallenges.Library\CodingChallenges.Library.csproj" />
+  </ItemGroup>
+
 </Project>

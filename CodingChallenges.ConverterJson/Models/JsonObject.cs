@@ -1,16 +1,26 @@
-﻿using System.Collections.Immutable;
+﻿using CodingChallenges.ConverterJson.Services;
 
 namespace CodingChallenges.ConverterJson.Models;
 
 public class JsonObject : Json
 {
-    public IImmutableDictionary<string, Json> Members { get; }
+    public FifoDictionary<string, Json> Members { get; }
 
-    public JsonObject(IImmutableDictionary<string, Json> members)
+    public JsonObject(FifoDictionary<string, Json> members)
     {
         Members = members;
     }
 
-    public override string ToString()
-        => $"{{{string.Join(",", Members.Select(kvp => $"\"{kvp.Key}\":{kvp.Value}"))}}}";
+    public override object GetData()
+    {
+        var list = new List<string>();
+        while (Members.Count > 0)
+        {
+            var item = Members.Dequeue();
+            var result = $"\"{item.Key}\":{item.Value.GetData()}";
+            list.Add(result);
+        }
+
+        return $"{{{string.Join(",", list)}}}";
+    }
 }

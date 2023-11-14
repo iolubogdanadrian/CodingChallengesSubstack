@@ -9,6 +9,5 @@ public class JsonString : Json
         Value = value;
     }
 
-    public override string ToString()
-        => $"\"{Value}\"";
+    public override object GetData() => $"\"{Value}\"";
 }

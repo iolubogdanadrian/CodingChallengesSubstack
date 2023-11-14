@@ -1,4 +1,6 @@
-﻿namespace CodingChallenges.Monads.Services;
+﻿#pragma warning disable CS8604 // Possible null reference argument.
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+namespace CodingChallenges.Monads.Services;
 
 public class Result<T>
 {
@@ -42,7 +44,7 @@ public class Result<T>
 
     public Result<T> Bind<TInput>(Result<TInput> result, Func<TInput, Result<T>> func) => result.IsSuccess
         ? func(result.Value)
-        : Failure(result.Error);
+        : Failure(result.Error)!;
 
     //
 

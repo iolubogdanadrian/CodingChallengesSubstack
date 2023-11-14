@@ -1,6 +1,9 @@
 ﻿using System;
 using Pidgin;
 using static Pidgin.Parser;
+using static Pidgin.Parser<char>;
+
+#pragma warning disable CS8321 // Local function is declared but never used
 
 // We'll be parsing strings - sequences of characters.
 
@@ -11,6 +14,32 @@ namespace LearningPhase
     {
         static void Main(string[] args)
         {
+            /*
+             * Verify type bool
+             */
+            var boolParser = String("true").Or(String("false")).Select(bool.Parse);
+            var resultTrue = boolParser.ParseOrThrow("true");
+            var resultFalse = boolParser.ParseOrThrow("false");
+            Console.WriteLine(resultTrue);
+            Console.WriteLine(resultFalse);
+
+            //
+
+            var parser2 = String("true").Or(String("false")).Select(bool.Parse);
+            var rs = parser2.ParseOrThrow("true");
+            Console.WriteLine("result:" + rs);
+
+
+            /*
+             * Between
+             */
+            var a = Char('[');
+            var b = Char(']');
+            var content = Token(it => it != '[' && it != ']').ManyString();
+            var resultB = content.Between(a, b);
+
+            var result = resultB.ParseOrThrow("[Hello,World!]");
+            Console.WriteLine(result);
             // var parser = Char('a');
             // var test1 = parser.ParseOrThrow("a");
 
@@ -23,10 +52,10 @@ namespace LearningPhase
             // Console.WriteLine("bar: " + sequencedParser.ParseOrThrow("foobar")); // "foo" got thrown away
             // Console.WriteLine(sequencedParser.ParseOrThrow("food"));
 
-            var parser1 = String("foo");
-            var parser2 = String("bar");
-            var sequencedParser = parser1.Before(parser2);
-            Console.WriteLine("foo: " + sequencedParser.ParseOrThrow("foobar")); // "bar" got thrown away
+            // var parser1 = String("foo");
+            // var parser2 = String("bar");
+            // var sequencedParser = parser1.Before(parser2);
+            // Console.WriteLine("foo: " + sequencedParser.ParseOrThrow("foobar")); // "bar" got thrown away
             // Assert.Throws<ParseException>(() => sequencedParser.ParseOrThrow("food"));
 
             /*
@@ -65,12 +94,12 @@ namespace LearningPhase
             // Console.WriteLine(expr.ParseOrThrow("(1)"));
             // Console.WriteLine(expr.ParseOrThrow("(((1)))"));
 
-            var parserT = Char('a');
-            var beforeT = Char('b');
-            var afterT = Char('c');
-            var inBraces = InBraces(parserT, beforeT, afterT);
-            var result = inBraces.ParseOrThrow("bac");
-            Console.WriteLine(result);
+            //var parserT = Char('a');
+            //var beforeT = Char('b');
+            //var afterT = Char('c');
+            //var inBraces = InBraces(parserT, beforeT, afterT);
+            //var result = inBraces.ParseOrThrow("bac");
+            //Console.WriteLine(result);
             Console.ReadLine();
             return;
 
@@ -80,5 +109,16 @@ namespace LearningPhase
             Parser<TToken, T> InBraces<TToken, T, U, V>(Parser<TToken, T> parser, Parser<TToken, U> before, Parser<TToken, V> after)
                 => before.Then(parser).Before(after);
         }
+
+        //private Parser<char, Json> JsonParserLeftBracket() => StructureJson()
+        //    .Map(it => (Json) new JsonString(it));
+
+        //private Parser<char, string> StructureJson()
+        //{
+        //    var leftBracket = Char('{');
+        //    var rightBracket = Char('}');
+        //    var content = Token(it => it != '{' && it != '}').ManyString();
+        //    return content.Between(leftBracket, rightBracket);
+        //}
     }
 }
