@@ -1,25 +1,5 @@
 https://codingchallenges.fyi/challenges/intro
 
-Certainly! Here are a few C# parser generator tools that can be used to create parsers based on input grammars:
+1) UnixCommandLineTool
 
-ANTLR (ANother Tool for Language Recognition)
-
-Language: C# support
-ANTLR is a powerful parser generator that supports multiple languages. It's widely used for building parsers and translators.
-Irony
-
-Language: C#
-Irony is an implementation of a simple modern parser generator that you can use to create parsers using grammars defined in C#.
-GoldParser
-
-Language: C#
-GoldParser is a simple, yet powerful, parser generator that supports various programming languages including C#. It allows you to define grammars and generate parsers accordingly.
-PEG.js (Parsing Expression Grammar for JavaScript)
-
-Language: C# via translation or adaptation
-While PEG.js itself is for JavaScript, its grammar definitions can be translated or adapted to C# for use in building parsers.
-Sprache
-
-Language: C#
-Sprache is a simple, lightweight library for constructing parsers directly in C# code. It allows you to define grammars using C# methods and functions.
-Each of these tools has its strengths and unique features. Depending on your specific requirements and the complexity of the grammars, you might find one more suitable than others.
+2) JSON Parser
