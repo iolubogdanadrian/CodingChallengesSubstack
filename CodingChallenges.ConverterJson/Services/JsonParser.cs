@@ -13,10 +13,12 @@ public class JsonParser
         .Parse(input);
 
     //
-
+    //TODO: AM RAMAS LA STEP 4
+    //todo:test for array
     private Parser<char, Json> JsonInternal() =>
         JsonStringType()
             .Or(Rec(JsonBoolType))
+            .Or(Rec(JsonIntType))
             .Or(Rec(JsonNullType))
             .Or(Rec(JsonObjectType));
 
@@ -29,23 +31,20 @@ public class JsonParser
         .Select(it => (Json) new JsonBool(it))
         .Labelled("JsonBoolType");
 
+    private Parser<char, Json> JsonIntType() => IntToken()
+        .Select(it => (Json) new JsonInt(it))
+        .Labelled("JsonBoolType");
+
     private Parser<char, Json> JsonNullType() => NullToken()
         .Select(_ => (Json) new JsonNull())
-        .Labelled("JsonBoolType");
+        .Labelled("JsonNullType");
 
     private Parser<char, Json> JsonObjectType() =>
         MembersTokens()
             .Between(SkipWhitespaces)
             .Separated(Comma)
             .Between(LeftBrace, RightBrace)
-            .Select<Json>(
-                kvps =>
-                {
-                    var fifoDictionary = new FifoDictionary<string, Json>();
-                    foreach (var item in kvps)
-                        fifoDictionary.Add(item.Key, item.Value);
-                    return new JsonObject(fifoDictionary);
-                })
+            .Select(CreateJsonObject)
             .Labelled("JsonObjectType");
 
     //
@@ -60,6 +59,12 @@ public class JsonParser
         var @true = LiteralBool("true", true);
         var @false = LiteralBool("false", false);
         return OneOf(@true, @false);
+    }
+
+    private Parser<char, int> IntToken()
+    {
+        var number = Map(int.Parse, Digit.AtLeastOnceString());
+        return OneOf(number);
     }
 
     private static Parser<char, object?> NullToken()
@@ -80,6 +85,7 @@ public class JsonParser
     private static Parser<char, bool> LiteralBool(string literal, bool value)
         => Map(_ => value, String(literal));
 
+    //
 
     private static readonly List<char> EscapeChars = new() {'\"', '\\', 'b', 'f', 'n', 'r', 't'};
 
@@ -104,4 +110,12 @@ public class JsonParser
 
     private static Parser<char, string> Tok(string value)
         => Tok(String(value));
+
+    private static Json CreateJsonObject(IEnumerable<KeyValuePair<string, Json>> kvps)
+    {
+        var fifoDictionary = new FifoDictionary<string, Json>();
+        foreach (var item in kvps)
+            fifoDictionary.Add(item.Key, item.Value);
+        return new JsonObject(fifoDictionary);
+    }
 }
