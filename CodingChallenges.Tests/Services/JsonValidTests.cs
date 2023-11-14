@@ -110,4 +110,38 @@ public class JsonValidTests
         Assert.IsTrue(result.Success);
         Assert.AreEqual("{\"key1\":[]}", result.Value.GetData() + "");
     }
+
+    [TestMethod("Parse object type")]
+    public void Test11()
+    {
+        const string json = "{\"key1\": {}}";
+
+        var result = sut.Parse(json);
+
+        Assert.IsTrue(result.Success);
+        Assert.AreEqual("{\"key1\":{}}", result.Value.GetData() + "");
+    }
+
+    [TestMethod("Step 4 - valid.json")]
+    public void Test12()
+    {
+        const string json = "{\"key\": \"value\",\r\n  \"key-n\": 101,\r\n  \"key-o\": {},\r\n  \"key-l\": []\r\n}";
+
+        var result = sut.Parse(json);
+
+        Assert.IsTrue(result.Success);
+        Assert.AreEqual("{\"key\":\"value\",\"key-n\":101,\"key-o\":{},\"key-l\":[]}", result.Value.GetData() + "");
+    }
+
+    [TestMethod("Step 4 - valid2.json")]
+    public void Test13()
+    {
+        const string json =
+            "{\n  \"key\": \"value\",\n  \"key-n\": 101,\n  \"key-o\": {\n    \"inner key\": \"inner value\"\n  },\n  \"key-l\": [\"list value\"]\n}";
+
+        var result = sut.Parse(json);
+
+        Assert.IsTrue(result.Success);
+        Assert.AreEqual("{\"key\":\"value\",\"key-n\":101,\"key-o\":{\"inner key\":\"inner value\"},\"key-l\":[\"list value\"]}", result.Value.GetData() + "");
+    }
 }

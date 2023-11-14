@@ -52,4 +52,15 @@ public class InvalidJsonTests
 
         Assert.IsFalse(result.Success);
     }
+
+    [TestMethod("Test for Step4 invalid.json")]
+    public void Test5()
+    {
+        const string json =
+            "{\"key\":\"value\",\"key-n\":101,\"key-o\": {\"inner key\":\"inner value\"},\"key-l\": ['list value']}";
+
+        var result = sut.Parse(json);
+
+        Assert.IsFalse(result.Success);
+    }
 }
