@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CodingChallenges.Library\CodingChallenges.Library.csproj" />
+    <ProjectReference Include="..\CodingChallenges.Monads\CodingChallenges.Monads.csproj" />
   </ItemGroup>
 
 </Project>

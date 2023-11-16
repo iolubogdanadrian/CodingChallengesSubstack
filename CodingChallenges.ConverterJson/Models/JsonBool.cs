@@ -9,5 +9,5 @@ public class JsonBool : Json
         Value = value;
     }
 
-    public override object GetData() => $"{Value}".ToLower();
+    public override object Show() => $"{Value}".ToLower();
 }

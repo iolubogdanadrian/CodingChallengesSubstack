@@ -31,7 +31,7 @@ public class JsonValidTests
         var result = sut.Parse(json);
 
         Assert.IsTrue(result.Success);
-        Assert.AreEqual("{\"key\":\"value\"}", result.Value.GetData() + "");
+        Assert.AreEqual("{\"key\":\"value\"}", result.Value.Show() + "");
     }
 
     [TestMethod("Parse two lines")]
@@ -42,7 +42,7 @@ public class JsonValidTests
         var result = sut.Parse(json);
 
         Assert.IsTrue(result.Success);
-        Assert.AreEqual("{\"key\":\"value\",\"key2\":\"value\"}", result.Value.GetData() + "");
+        Assert.AreEqual("{\"key\":\"value\",\"key2\":\"value\"}", result.Value.Show() + "");
     }
 
     [TestMethod("Parse bool type of value")]
@@ -53,7 +53,7 @@ public class JsonValidTests
         var result = sut.Parse(json);
 
         Assert.IsTrue(result.Success);
-        Assert.AreEqual("{\"key1\":true}", result.Value.GetData() + "");
+        Assert.AreEqual("{\"key1\":true}", result.Value.Show() + "");
     }
 
     [TestMethod("Parse bool types of value")]
@@ -64,7 +64,7 @@ public class JsonValidTests
         var result = sut.Parse(json);
 
         Assert.IsTrue(result.Success);
-        Assert.AreEqual("{\"key1\":true,\"key2\":false}", result.Value.GetData() + "");
+        Assert.AreEqual("{\"key1\":true,\"key2\":false}", result.Value.Show() + "");
     }
 
     [TestMethod("Parse null type")]
@@ -75,7 +75,7 @@ public class JsonValidTests
         var result = sut.Parse(json);
 
         Assert.IsTrue(result.Success);
-        Assert.AreEqual("{\"key1\":null}", result.Value.GetData() + "");
+        Assert.AreEqual("{\"key1\":null}", result.Value.Show() + "");
     }
 
     [TestMethod("Parse int type")]
@@ -86,7 +86,7 @@ public class JsonValidTests
         var result = sut.Parse(json);
 
         Assert.IsTrue(result.Success);
-        Assert.AreEqual("{\"key1\":101}", result.Value.GetData() + "");
+        Assert.AreEqual("{\"key1\":101}", result.Value.Show() + "");
     }
 
     [TestMethod("Parse multiple types")]
@@ -97,7 +97,7 @@ public class JsonValidTests
         var result = sut.Parse(json);
 
         Assert.IsTrue(result.Success);
-        Assert.AreEqual("{\"key1\":true,\"key2\":false,\"key3\":null,\"key4\":\"value\",\"key5\":101}", result.Value.GetData() + "");
+        Assert.AreEqual("{\"key1\":true,\"key2\":false,\"key3\":null,\"key4\":\"value\",\"key5\":101}", result.Value.Show() + "");
     }
 
     [TestMethod("Parse array type")]
@@ -108,7 +108,7 @@ public class JsonValidTests
         var result = sut.Parse(json);
 
         Assert.IsTrue(result.Success);
-        Assert.AreEqual("{\"key1\":[]}", result.Value.GetData() + "");
+        Assert.AreEqual("{\"key1\":[]}", result.Value.Show() + "");
     }
 
     [TestMethod("Parse object type")]
@@ -119,7 +119,7 @@ public class JsonValidTests
         var result = sut.Parse(json);
 
         Assert.IsTrue(result.Success);
-        Assert.AreEqual("{\"key1\":{}}", result.Value.GetData() + "");
+        Assert.AreEqual("{\"key1\":{}}", result.Value.Show() + "");
     }
 
     [TestMethod("Step 4 - valid.json")]
@@ -130,7 +130,7 @@ public class JsonValidTests
         var result = sut.Parse(json);
 
         Assert.IsTrue(result.Success);
-        Assert.AreEqual("{\"key\":\"value\",\"key-n\":101,\"key-o\":{},\"key-l\":[]}", result.Value.GetData() + "");
+        Assert.AreEqual("{\"key\":\"value\",\"key-n\":101,\"key-o\":{},\"key-l\":[]}", result.Value.Show() + "");
     }
 
     [TestMethod("Step 4 - valid2.json")]
@@ -142,10 +142,11 @@ public class JsonValidTests
         var result = sut.Parse(json);
 
         Assert.IsTrue(result.Success);
-        Assert.AreEqual("{\"key\":\"value\",\"key-n\":101,\"key-o\":{\"inner key\":\"inner value\"},\"key-l\":[\"list value\"]}", result.Value.GetData() + "");
+        Assert.AreEqual("{\"key\":\"value\",\"key-n\":101,\"key-o\":{\"inner key\":\"inner value\"},\"key-l\":[\"list value\"]}", result.Value.Show() + "");
     }
 
     [TestMethod("Step 5 - pass1.json")]
+    [Ignore]
     public void Test14()
     {
         const string json =

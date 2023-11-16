@@ -6,19 +6,22 @@ using static Pidgin.Parser<char>;
 
 // ReSharper disable StaticMemberInitializerReferesToMemberBelow
 #pragma warning disable CS8604 // Possible null reference argument.
+//TODO: AM RAMAS LA STEP 5
 namespace CodingChallenges.ConverterJson.Services;
 
 public class JsonParser
 {
-    public Result<char, Json> Parse(string input) => JsonInternal()
-        .Parse(input);
+    public Result<char, Json> Parse(string input) => JsonWrapper().Parse(input);
 
-    //TODO: AM RAMAS LA STEP 4
-    //TODO: test for array
+    //
+
+    private Parser<char, Json> JsonWrapper() => JsonArrayType()
+        .Or(Rec(JsonObjectType));
+
     private Parser<char, Json> JsonInternal() => JsonStringType()
         .Or(Rec(JsonArrayType))
         .Or(Rec(JsonBoolType))
-        .Or(Rec(JsonIntType))
+        .Or(Rec(JsonNumericType))
         .Or(Rec(JsonNullType))
         .Or(Rec(JsonObjectType));
 
@@ -30,9 +33,9 @@ public class JsonParser
         .Select(it => (Json) new JsonBool(it))
         .Labelled("JsonBoolType");
 
-    private Parser<char, Json> JsonIntType() => IntToken()
-        .Select(it => (Json) new JsonInt(it))
-        .Labelled("JsonIntType");
+    private Parser<char, Json> JsonNumericType() => NumericToken()
+        .Select(it => (Json) new JsonNumeric(it))
+        .Labelled("JsonNumericType");
 
     private Parser<char, Json> JsonNullType() => NullToken()
         .Select(_ => (Json) new JsonNull())
@@ -49,7 +52,7 @@ public class JsonParser
         .Between(SkipWhitespaces)
         .Separated(Comma)
         .Between(LeftBracket, RightBracket)
-        .Select<Json>(it => new JsonArray(it.ToImmutableArray()))
+        .Select(CreateJsonArray)
         .Labelled("JsonArrayType");
 
     //
@@ -65,8 +68,9 @@ public class JsonParser
         return OneOf(@true, @false);
     }
 
-    private Parser<char, int> IntToken()
+    private Parser<char, int> NumericToken()
     {
+        //1-9
         var number = Map(int.Parse, Digit.AtLeastOnceString());
         return OneOf(number);
     }
@@ -89,6 +93,8 @@ public class JsonParser
     private static Parser<char, bool> LiteralBool(string literal, bool value)
         => Map(_ => value, String(literal));
 
+    private Parser<char, T> Parenthesised<T>(Parser<char, T> p)
+        => p.Between(LeftBrace, RightBrace);
     //
 
     private static readonly List<char> EscapeChars = new() {'\"', '\\', 'b', 'f', 'n', 'r', 't'};
@@ -122,4 +128,7 @@ public class JsonParser
             fifoDictionary.Add(item.Key, item.Value);
         return new JsonObject(fifoDictionary);
     }
+
+    private static Json CreateJsonArray(IEnumerable<Json> it) =>
+        new JsonArray(it.ToImmutableArray());
 }

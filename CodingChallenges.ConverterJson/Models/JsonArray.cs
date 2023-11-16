@@ -11,10 +11,10 @@ public class JsonArray : Json
         Elements = elements;
     }
 
-    public override object GetData()
+    public override object Show()
     {
         if (Elements.Length == 0)
             return "[]";
-        return $"[{string.Join(",", Elements.Select(e => e.GetData()))}]";
+        return $"[{string.Join(",", Elements.Select(e => e.Show()))}]";
     }
 }

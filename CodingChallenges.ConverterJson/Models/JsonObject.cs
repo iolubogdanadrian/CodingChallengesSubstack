@@ -11,13 +11,13 @@ public class JsonObject : Json
         Members = members;
     }
 
-    public override object GetData()
+    public override object Show()
     {
         var list = new List<string>();
         while (Members.Count > 0)
         {
             var item = Members.Dequeue();
-            var result = $"\"{item.Key}\":{item.Value.GetData()}";
+            var result = $"\"{item.Key}\":{item.Value.Show()}";
             list.Add(result);
         }
 

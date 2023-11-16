@@ -1,13 +1,13 @@
 ﻿namespace CodingChallenges.ConverterJson.Models;
 
-public class JsonInt : Json
+public class JsonNumeric : Json
 {
     public int Value { get; }
 
-    public JsonInt(int value)
+    public JsonNumeric(int value)
     {
         Value = value;
     }
 
-    public override object GetData() => Value;
+    public override object Show() => Value;
 }

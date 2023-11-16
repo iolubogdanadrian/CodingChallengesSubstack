@@ -2,5 +2,5 @@
 
 public class JsonNull : Json
 {
-    public override object GetData() => "null";
+    public override object Show() => "null";
 }

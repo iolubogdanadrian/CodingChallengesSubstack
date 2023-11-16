@@ -2,5 +2,5 @@
 
 public abstract class Json
 {
-    public abstract object GetData();
+    public abstract object Show();
 }
