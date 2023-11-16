@@ -1,4 +1,5 @@
 ﻿using System.Collections.Immutable;
+using CodingChallenges.ConverterJson.Helpers;
 using CodingChallenges.ConverterJson.Models;
 using Pidgin;
 using static Pidgin.Parser;
@@ -44,14 +45,14 @@ public class JsonParser
     private Parser<char, Json> JsonObjectType() => MembersTokens()
         .Between(SkipWhitespaces)
         .Separated(Comma)
-        .Between(LeftBrace, RightBrace)
+        .Curled()
         .Select(CreateJsonObject)
         .Labelled("JsonObjectType");
 
     private Parser<char, Json> JsonArrayType() => JsonInternal()
         .Between(SkipWhitespaces)
         .Separated(Comma)
-        .Between(LeftBracket, RightBracket)
+        .Bracketed()
         .Select(CreateJsonArray)
         .Labelled("JsonArrayType");
 
@@ -93,21 +94,11 @@ public class JsonParser
     private static Parser<char, bool> LiteralBool(string literal, bool value)
         => Map(_ => value, String(literal));
 
-    private Parser<char, T> Parenthesised<T>(Parser<char, T> p)
-        => p.Between(LeftBrace, RightBrace);
     //
 
-    private static readonly List<char> EscapeChars = new() {'\"', '\\', 'b', 'f', 'n', 'r', 't'};
-
-    private Parser<char, char> Comma => Tok(',');
-    private Parser<char, char> LeftBrace => Tok('{');
-    private Parser<char, char> RightBrace => Tok('}');
-    private Parser<char, char> LeftBracket => Tok('[');
-    private Parser<char, char> RightBracket => Tok(']');
-    private Parser<char, char> Quote => Tok('"');
-    private Parser<char, char> Colon => Tok(':');
-    private Parser<char, string> True => Tok("true");
-    private Parser<char, string> False => Tok("false");
+    private static Parser<char, char> Comma => Tok(',');
+    private static Parser<char, char> Quote => Tok('"');
+    private static Parser<char, char> Colon => Tok(':');
 
     private Parser<char, char> ColonWhitespace() => Colon
         .Between(SkipWhitespaces);
