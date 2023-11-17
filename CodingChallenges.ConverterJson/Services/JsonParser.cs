@@ -5,9 +5,6 @@ using Pidgin;
 using static Pidgin.Parser;
 using static Pidgin.Parser<char>;
 
-// ReSharper disable StaticMemberInitializerReferesToMemberBelow
-#pragma warning disable CS8604 // Possible null reference argument.
-//TODO: AM RAMAS LA STEP 5
 namespace CodingChallenges.ConverterJson.Services;
 
 public class JsonParser

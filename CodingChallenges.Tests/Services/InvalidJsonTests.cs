@@ -75,7 +75,6 @@ public class InvalidJsonTests
     }
 
     [TestMethod("fail2.json")]
-    [Ignore]
     public void Test7()
     {
         const string json = "[\"Unclosed array\"";
@@ -86,7 +85,6 @@ public class InvalidJsonTests
     }
 
     [TestMethod("fail3.json")]
-    [Ignore]
     public void Test8()
     {
         const string json = "{unquoted_key: \"keys must be quoted\"}";
@@ -97,7 +95,6 @@ public class InvalidJsonTests
     }
 
     [TestMethod("fail4.json")]
-    [Ignore]
     public void Test9()
     {
         const string json = "[\"extra comma\",]";
@@ -108,7 +105,6 @@ public class InvalidJsonTests
     }
 
     [TestMethod("fail5.json")]
-    [Ignore]
     public void Test10()
     {
         const string json = "[\"double extra comma\",,]";
@@ -119,7 +115,6 @@ public class InvalidJsonTests
     }
 
     [TestMethod("fail6.json")]
-    [Ignore]
     public void Test11()
     {
         const string json = "[   , \"<-- missing value\"]";
@@ -159,7 +154,7 @@ public class InvalidJsonTests
         Assert.IsFalse(result.Success);
     }
 
-    [TestMethod("fail10.json")]
+    [TestMethod("fail10.json")] [Ignore]
     public void Test15()
     {
         const string json = "{\"Extra value after close\": true} \"misplaced quoted value\"";
