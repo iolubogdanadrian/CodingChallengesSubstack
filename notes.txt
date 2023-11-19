@@ -3,3 +3,4 @@ https://codingchallenges.fyi/challenges/intro
 1) UnixCommandLineTool
 
 2) JSON Parser
+	When have bad json: 01  need to start 1-9

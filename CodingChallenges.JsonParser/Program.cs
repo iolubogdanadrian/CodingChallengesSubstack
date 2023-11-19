@@ -1,6 +1,6 @@
 ﻿using CodingChallenges.ConverterJson.Services;
 
-var json = "{\"key\": \"value\",\"key2\": \"value\"}";
+const string json = "{\"key1\":101}";
 var jsonParser = new JsonParser().Parse(json);
-Console.WriteLine(jsonParser.Value);
+Console.WriteLine($"Expected: {{\"key1\":101}}\r\n Result: {jsonParser.Value.Show()}");
 Console.ReadLine();

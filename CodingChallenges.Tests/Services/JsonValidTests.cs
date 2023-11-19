@@ -1,4 +1,5 @@
 ﻿using CodingChallenges.ConverterJson.Services;
+using CodingChallenges.Library.Helpers;
 
 namespace CodingChallenges.Tests.Services;
 
@@ -182,7 +183,7 @@ public class JsonValidTests
         // Assert.AreEqual("", result.Value.Show() + "");
     }
 
-    [TestMethod("Accept negative number")]
+    [TestMethod("Parse negative number")]
     public void Test17()
     {
         const string json = "{\"key1\": -42}";
@@ -191,5 +192,16 @@ public class JsonValidTests
 
         Assert.IsTrue(result.Success);
         Assert.AreEqual("{\"key1\":-42}", result.Value.Show());
+    }
+
+    [TestMethod("Parse decimal number")]
+    public void Test18()
+    {
+        const string json = "{\r\n\t\"key1\": 0.5\r\n}";
+
+        var result = sut.Parse(json);
+
+        Assert.IsTrue(result.Success);
+        Assert.AreEqual(json.RemoveEscapeCharacters(), result.Value.Show());
     }
 }
