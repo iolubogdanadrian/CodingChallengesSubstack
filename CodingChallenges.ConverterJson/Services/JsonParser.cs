@@ -66,10 +66,10 @@ public class JsonParser
         return OneOf(@true, @false);
     }
 
-    private Parser<char, int> NumericToken()
+    private Parser<char, double> NumericToken()
     {
         //1-9
-        var number = Map(int.Parse, Digit.AtLeastOnceString());
+        var number = Map(double.Parse, DecimalBeforeString());
         return OneOf(number);
     }
 
@@ -84,6 +84,9 @@ public class JsonParser
         .Then(JsonInternal(), (name, value) => new KeyValuePair<string, Json>(name, value));
 
     //
+
+    private static Parser<char, string> DecimalBeforeString() =>
+        Token(c => char.IsDigit(c) || c == '-' || c == '+').AtLeastOnceString();
 
     private static Parser<char, object?> LiteralObject(string literal, object? value)
         => Map(_ => value, String(literal));

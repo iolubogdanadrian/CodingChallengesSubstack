@@ -155,7 +155,7 @@ public class JsonValidTests
         var result = sut.Parse(json);
 
         Assert.IsTrue(result.Success);
-        // Assert.AreEqual("", result.Value.GetData() + "");
+        // Assert.AreEqual("", result.Value.Show() + "");
     }
 
     [TestMethod("Step 5 - pass2.json")]
@@ -167,7 +167,7 @@ public class JsonValidTests
         var result = sut.Parse(json);
 
         Assert.IsTrue(result.Success);
-        // Assert.AreEqual("", result.Value.GetData() + "");
+        // Assert.AreEqual("", result.Value.Show() + "");
     }
 
     [TestMethod("Step 5 - pass3.json")]
@@ -179,6 +179,17 @@ public class JsonValidTests
         var result = sut.Parse(json);
 
         Assert.IsTrue(result.Success);
-        // Assert.AreEqual("", result.Value.GetData() + "");
+        // Assert.AreEqual("", result.Value.Show() + "");
+    }
+
+    [TestMethod("Accept negative number")]
+    public void Test17()
+    {
+        const string json = "{\"key1\": -42}";
+
+        var result = sut.Parse(json);
+
+        Assert.IsTrue(result.Success);
+        Assert.AreEqual("{\"key1\":-42}", result.Value.Show());
     }
 }

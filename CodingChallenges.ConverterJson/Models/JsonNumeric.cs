@@ -2,9 +2,9 @@
 
 public class JsonNumeric : Json
 {
-    public int Value { get; }
+    public double Value { get; }
 
-    public JsonNumeric(int value)
+    public JsonNumeric(double value)
     {
         Value = value;
     }
