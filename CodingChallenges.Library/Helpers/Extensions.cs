@@ -12,7 +12,7 @@ public static class Extensions
 
     public static string RemoveEscapeCharacters(this string input)
     {
-        char[] escapeCharacters = {'\r', '\n', '\t'};
+        char[] escapeCharacters = {'\r', '\n', '\t', ' '};
         var pattern = "[" + Regex.Escape(new string(escapeCharacters)) + "]";
         return Regex.Replace(input, pattern, "");
     }

@@ -1,9 +1,10 @@
 ﻿using System.Collections.Immutable;
 using CodingChallenges.ConverterJson.Helpers;
 using CodingChallenges.ConverterJson.Models;
+using CodingChallenges.Library;
 using Pidgin;
-using static Pidgin.Parser;
 using static Pidgin.Parser<char>;
+using static Pidgin.Parser;
 
 namespace CodingChallenges.ConverterJson.Services;
 
@@ -66,12 +67,9 @@ public class JsonParser
         return OneOf(@true, @false);
     }
 
-    private Parser<char, double> NumericToken()
-    {
-        //1-9
-        var number = Map(double.Parse, DecimalBeforeString());
-        return OneOf(number);
-    }
+    private Parser<char, double> NumericToken() => DecimalBeforeString()
+        .Before(SkipWhitespaces)
+        .Select(it => (double) decimal.Parse(it, Constants.CULTURE));
 
     private static Parser<char, object?> NullToken()
     {
@@ -86,7 +84,9 @@ public class JsonParser
     //
 
     private static Parser<char, string> DecimalBeforeString() =>
-        Token(c => char.IsDigit(c) || c == '-' || c == '+').AtLeastOnceString();
+        Token(c => char.IsDigit(c) || c == '-' || c == '+' || c == '.')
+            .AtLeastOnce()
+            .Select(chars => new string(chars.ToArray()));
 
     private static Parser<char, object?> LiteralObject(string literal, object? value)
         => Map(_ => value, String(literal));

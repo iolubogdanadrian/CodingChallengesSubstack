@@ -1,4 +1,5 @@
-﻿using CodingChallenges.ConverterJson.Services;
+﻿using System.Globalization;
+using CodingChallenges.ConverterJson.Services;
 using CodingChallenges.Library.Helpers;
 
 namespace CodingChallenges.Tests.Services;
@@ -11,6 +12,8 @@ public class JsonValidTests
     // ReSharper disable once ConvertConstructorToMemberInitializers
     public JsonValidTests()
     {
+        Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+        Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
         sut = new JsonParser();
     }
 
@@ -191,7 +194,7 @@ public class JsonValidTests
         var result = sut.Parse(json);
 
         Assert.IsTrue(result.Success);
-        Assert.AreEqual("{\"key1\":-42}", result.Value.Show());
+        Assert.AreEqual(json.RemoveEscapeCharacters(), result.Value.Show());
     }
 
     [TestMethod("Parse decimal number")]

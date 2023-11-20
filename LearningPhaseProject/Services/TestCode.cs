@@ -1,45 +1,41 @@
 ﻿using System;
 using Pidgin;
-using static Pidgin.Parser;
-using static Pidgin.Parser<char>;
 
-#pragma warning disable CS8321 // Local function is declared but never used
+namespace LearningPhase.Services;
 
 // We'll be parsing strings - sequences of characters.
-
 // For other applications (eg parsing binary file formats) TToken may be some other type (eg byte).
-namespace LearningPhase;
-
-internal class Program
+internal class TestCode
 {
-    private static void Main(string[] args)
+    public void Testing()
     {
         /*
          * Verify type bool
          */
-        var boolParser = String("true").Or(String("false")).Select(bool.Parse);
-        var resultTrue = boolParser.ParseOrThrow("true");
-        var resultFalse = boolParser.ParseOrThrow("false");
-        Console.WriteLine(resultTrue);
-        Console.WriteLine(resultFalse);
-
+        // var boolParser = string("true").Or(string("false")).Select(bool.Parse);
+        // var resultTrue = boolParser.ParseOrThrow("true");
+        // var resultFalse = boolParser.ParseOrThrow("false");
+        // Console.WriteLine(resultTrue);
+        // Console.WriteLine(resultFalse);
         //
+        // //
+        //
+        // var parser2 = string("true").Or(string("false")).Select(bool.Parse);
+        // var rs = parser2.ParseOrThrow("true");
+        // Console.WriteLine("result:" + rs);
+        //
+        //
+        // /*
+        //  * Between
+        //  */
+        // var a = char('[');
+        // var b = char(']');
+        // var content = Token(it => it != '[' && it != ']').ManyString();
+        // var resultB = content.Between(a, b);
+        //
+        // var result = resultB.ParseOrThrow("[Hello,World!]");
+        // Console.WriteLine(result);
 
-        var parser2 = String("true").Or(String("false")).Select(bool.Parse);
-        var rs = parser2.ParseOrThrow("true");
-        Console.WriteLine("result:" + rs);
-
-
-        /*
-         * Between
-         */
-        var a = Char('[');
-        var b = Char(']');
-        var content = Token(it => it != '[' && it != ']').ManyString();
-        var resultB = content.Between(a, b);
-
-        var result = resultB.ParseOrThrow("[Hello,World!]");
-        Console.WriteLine(result);
         // var parser = Char('a');
         // var test1 = parser.ParseOrThrow("a");
 

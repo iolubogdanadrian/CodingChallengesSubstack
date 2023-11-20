@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodingChallenges.JsonParser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodingChallenges.ConverterJson", "CodingChallenges.ConverterJson\CodingChallenges.ConverterJson.csproj", "{741324B7-BB67-4DE4-90FC-005DC19949F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearningPhase", "LearningPhase\LearningPhase.csproj", "{A583C559-A68D-4126-B5A1-2FD5FFF970B9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearningPhaseProject", "LearningPhaseProject\LearningPhaseProject.csproj", "{CE733483-4160-4E8D-BB20-EB06154CDF3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,10 +53,10 @@ Global
 		{741324B7-BB67-4DE4-90FC-005DC19949F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{741324B7-BB67-4DE4-90FC-005DC19949F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{741324B7-BB67-4DE4-90FC-005DC19949F5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A583C559-A68D-4126-B5A1-2FD5FFF970B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A583C559-A68D-4126-B5A1-2FD5FFF970B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A583C559-A68D-4126-B5A1-2FD5FFF970B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A583C559-A68D-4126-B5A1-2FD5FFF970B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE733483-4160-4E8D-BB20-EB06154CDF3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE733483-4160-4E8D-BB20-EB06154CDF3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE733483-4160-4E8D-BB20-EB06154CDF3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE733483-4160-4E8D-BB20-EB06154CDF3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
