@@ -1,7 +1,7 @@
 ﻿using System.Collections.Immutable;
+using System.Globalization;
 using CodingChallenges.ConverterJson.Helpers;
 using CodingChallenges.ConverterJson.Models;
-using CodingChallenges.Library;
 using Pidgin;
 using static Pidgin.Parser<char>;
 using static Pidgin.Parser;
@@ -69,7 +69,7 @@ public class JsonParser
 
     private Parser<char, double> NumericToken() => DecimalBeforeString()
         .Before(SkipWhitespaces)
-        .Select(it => (double) decimal.Parse(it, Constants.CULTURE));
+        .Select(it => double.Parse(it, CultureInfo.InvariantCulture));
 
     private static Parser<char, object?> NullToken()
     {
@@ -84,7 +84,7 @@ public class JsonParser
     //
 
     private static Parser<char, string> DecimalBeforeString() =>
-        Token(c => char.IsDigit(c) || c == '-' || c == '+' || c == '.')
+        Token(c => char.IsDigit(c) || c == '-' || c == '+' || c == '.' || c == 'e' || c == 'E')
             .AtLeastOnce()
             .Select(chars => new string(chars.ToArray()));
 

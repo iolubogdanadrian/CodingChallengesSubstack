@@ -207,4 +207,70 @@ public class JsonValidTests
         Assert.IsTrue(result.Success);
         Assert.AreEqual(json.RemoveEscapeCharacters(), result.Value.Show());
     }
+
+    [TestMethod("Parse integer number")]
+    public void Test19()
+    {
+        const string json = "{\"integer\": 1234567890}";
+
+        var result = sut.Parse(json);
+
+        Assert.IsTrue(result.Success);
+        Assert.AreEqual(json.RemoveEscapeCharacters(), result.Value.Show());
+    }
+
+    [TestMethod("Parse real number")]
+    public void Test20()
+    {
+        const string json = "{\"real\": -9876.54321}";
+
+        var result = sut.Parse(json);
+
+        Assert.IsTrue(result.Success);
+        Assert.AreEqual(json.RemoveEscapeCharacters(), result.Value.Show());
+    }
+
+    [TestMethod("Parse decimal number in scientific notation (show with upper case)")]
+    public void Test23()
+    {
+        const string json = "{\"e\": 1.23456789e-13}";
+
+        var result = sut.Parse(json);
+
+        Assert.IsTrue(result.Success);
+        Assert.AreEqual("{\"e\":1.23456789E-13}", result.Value.Show());
+    }
+
+    [TestMethod("Parse zero")]
+    public void Test21()
+    {
+        const string json = "{\"zero\": 0}";
+
+        var result = sut.Parse(json);
+
+        Assert.IsTrue(result.Success);
+        Assert.AreEqual(json.RemoveEscapeCharacters(), result.Value.Show());
+    }
+
+    [TestMethod("Parse one")]
+    public void Test22()
+    {
+        const string json = "{\"one\": 1}";
+
+        var result = sut.Parse(json);
+
+        Assert.IsTrue(result.Success);
+        Assert.AreEqual(json.RemoveEscapeCharacters(), result.Value.Show());
+    }
+
+    [TestMethod("Parse quote")]
+    public void Test33()
+    {
+        const string json = "{\"quote\": \"\\\"\"}";
+
+        var result = sut.Parse(json);
+
+        Assert.IsTrue(result.Success);
+        Assert.AreEqual("{\"quote\": \"\\\"\"}", result.Value.Show());
+    }
 }

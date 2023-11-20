@@ -8,11 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Pidgin" Version="3.2.2" />
+    <PackageReference Include="Pidgin" Version="3.2.3" />
   </ItemGroup>
 
 </Project>

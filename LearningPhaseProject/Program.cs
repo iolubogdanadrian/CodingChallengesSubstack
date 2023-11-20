@@ -1,21 +1,22 @@
-﻿using System.Globalization;
-using Pidgin;
-using static Pidgin.Parser;
+﻿using Pidgin;
 using static Pidgin.Parser<char>;
+using static Pidgin.Parser;
 
-var culture = CultureInfo.InvariantCulture;
 
-// var test1 = decimal.Parse("123.45", culture);
-var result = NumericToken().ParseOrThrow("5.6");
+var result = StringToken().ParseOrThrow(".");
 Console.WriteLine(result);
 Console.ReadLine();
 return;
 
-Parser<char, double> NumericToken() => DecimalBeforeString()
-    .Before(SkipWhitespaces)
-    .Select(it => (double) decimal.Parse(it, culture));
+static Parser<char, string> StringToken()
+{
+    return Token(c => char.IsPunctuation(c)).ManyString();
+    return Char('"')
+        .Then(Token(c => char.IsPunctuation(c)).ManyString())
+        .Then(Char('"'))
+        .ManyString();
+}
 
-static Parser<char, string> DecimalBeforeString() =>
-    Token(c => char.IsDigit(c) || c == '-' || c == '+' || c == '.')
-        .AtLeastOnce()
-        .Select(chars => new string(chars.ToArray()));
+// Parser<char, string> StringToken2() => Char('"')
+//     .Then(Token(c => c != '"').ManyString()) //Token(c => char.IsPunctuation(c) || char.IsPunctuation(c) || char.IsLetterOrDigit(c) || c <= 127)
+//     .Before(Char('"'));
