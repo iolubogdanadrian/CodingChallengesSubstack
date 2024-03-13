@@ -1,4 +1,6 @@
-﻿using CodingChallenges.ConverterJson.Services;
+﻿using CodingChallenges.ConverterJson.Contracts;
+using CodingChallenges.ConverterJson.Services;
+using CodingChallenges.ConverterJson.Services.Parsers;
 
 namespace CodingChallenges.Tests.Services;
 
@@ -10,7 +12,28 @@ public class InvalidJsonTests
     // ReSharper disable once ConvertConstructorToMemberInitializers
     public InvalidJsonTests()
     {
-        sut = new JsonParser();
+        var objectParser = new ObjectParser();
+        var arrayParser = new ArrayParser();
+        var parsers = new List<ITokenParser>
+        {
+            new NumericParser(),
+            new BoolParser(),
+            new StringParser(),
+            new NullParser(),
+            objectParser,
+            arrayParser,
+        };
+
+        var parser = new ParserMultipleTypes(parsers);
+        objectParser.Parsers = parser;
+        arrayParser.Parsers = parser;
+
+        var tokenParsers = new List<ITokenParser>()
+        {
+            objectParser,
+            arrayParser,
+        };
+        sut = new JsonParser(tokenParsers);
     }
 
     [TestMethod("Parse a invalid JSON object")]
@@ -154,7 +177,8 @@ public class InvalidJsonTests
         Assert.IsFalse(result.Success);
     }
 
-    [TestMethod("fail10.json")] [Ignore]
+    [TestMethod("fail10.json")]
+    [Ignore]
     public void Test15()
     {
         const string json = "{\"Extra value after close\": true} \"misplaced quoted value\"";

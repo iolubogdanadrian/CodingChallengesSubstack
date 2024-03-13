@@ -1,7 +1,8 @@
-﻿using System;
-using Pidgin;
+﻿using Pidgin;
 
-namespace LearningPhase.Services;
+#pragma warning disable CS8321 // Local function is declared but never used
+
+namespace LearningPhaseProject.Services;
 
 // We'll be parsing strings - sequences of characters.
 // For other applications (eg parsing binary file formats) TToken may be some other type (eg byte).

@@ -4,3 +4,7 @@ https://codingchallenges.fyi/challenges/intro
 
 2) JSON Parser
 	When have bad json: 01  need to start 1-9
+
+	//Enum -(tip-ul) un dict la tip-ul respectiv la o clasa
+    //Ienumerable de parser pana iti da un rezultat bun
+    //IsValid || tryParse

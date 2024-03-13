@@ -18,7 +18,7 @@ public static class Extensions
 
     //
 
-    private static readonly List<char> EscapeChars = new() {'\"', '\\', 'b', 'f', 'n', 'r', 't'};
+    private static readonly List<char> EscapeChars = ['\"', '\\', 'b', 'f', 'n', 'r', 't'];
 
     private static Parser<char, char> LeftBrace => Tok('{');
     private static Parser<char, char> RightBrace => Tok('}');

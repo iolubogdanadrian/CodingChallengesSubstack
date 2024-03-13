@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
 		notes.txt = notes.txt
+		oldCode.txt = oldCode.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodingChallenges.Monads", "CodingChallenges.Monads\CodingChallenges.Monads.csproj", "{AE948D6A-A9FE-4CB8-9D5C-6EF25A4C3519}"
@@ -21,7 +22,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodingChallenges.JsonParser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodingChallenges.ConverterJson", "CodingChallenges.ConverterJson\CodingChallenges.ConverterJson.csproj", "{741324B7-BB67-4DE4-90FC-005DC19949F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LearningPhaseProject", "LearningPhaseProject\LearningPhaseProject.csproj", "{CE733483-4160-4E8D-BB20-EB06154CDF3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LearningPhaseProject", "LearningPhaseProject\LearningPhaseProject.csproj", "{CE733483-4160-4E8D-BB20-EB06154CDF3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

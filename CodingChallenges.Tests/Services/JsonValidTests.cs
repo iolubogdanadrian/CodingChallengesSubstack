@@ -1,5 +1,7 @@
 ﻿using System.Globalization;
+using CodingChallenges.ConverterJson.Contracts;
 using CodingChallenges.ConverterJson.Services;
+using CodingChallenges.ConverterJson.Services.Parsers;
 using CodingChallenges.Library.Helpers;
 
 namespace CodingChallenges.Tests.Services;
@@ -14,7 +16,30 @@ public class JsonValidTests
     {
         Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
         Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
-        sut = new JsonParser();
+
+
+        var objectParser = new ObjectParser();
+        var arrayParser = new ArrayParser();
+        var parsers = new List<ITokenParser>
+        {
+            new NumericParser(),
+            new BoolParser(),
+            new StringParser(),
+            new NullParser(),
+            objectParser,
+            arrayParser,
+        };
+
+        var parser = new ParserMultipleTypes(parsers);
+        objectParser.Parsers = parser;
+        arrayParser.Parsers = parser;
+
+        var tokenParsers = new List<ITokenParser>()
+        {
+            objectParser,
+            arrayParser,
+        };
+        sut = new JsonParser(tokenParsers);
     }
 
     [TestMethod("Parse a valid simple JSON object")]
