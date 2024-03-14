@@ -7,8 +7,6 @@ namespace CodingChallenges.ConverterJson.Services.Parsers;
 
 public class NullParser : ITokenParser
 {
-    public IParser Parsers { get; set; }
-
     public Parser<char, Json> GetToken() => NullToken()
         .Select(_ => (Json) new JsonNull())
         .Labelled("JsonNullType");

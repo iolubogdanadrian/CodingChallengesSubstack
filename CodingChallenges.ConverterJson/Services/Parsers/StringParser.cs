@@ -8,8 +8,6 @@ namespace CodingChallenges.ConverterJson.Services.Parsers;
 
 public class StringParser : ITokenParser
 {
-    public IParser Parsers { get; set; }
-
     public Parser<char, Json> GetToken() => StringToken()
         .Select<Json>(s => new JsonString(s))
         .Labelled("JsonStringType");
