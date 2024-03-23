@@ -6,14 +6,13 @@ using Pidgin;
 using static Pidgin.Parser;
 
 namespace CodingChallenges.ConverterJson.Services.Parsers;
+#pragma warning disable CS8618
 
-public class ArrayParser() : ITokenParser
+public class ArrayParser : ITokenParser
 {
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public IParser Parsers { get; set; }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
-    public Parser<char, Json> GetToken() => Parsers.JsonInternal()
+    public Parser<char, BaseToken> GetToken() => Parsers.JsonInternal()
         .Between(SkipWhitespaces)
         .Separated(Comma)
         .Bracketed()
@@ -35,6 +34,6 @@ public class ArrayParser() : ITokenParser
     private static Parser<char, string> Tok(string value)
         => Tok(String(value));
 
-    private static Json CreateJsonArray(IEnumerable<Json> it) =>
-        new JsonArray(it.ToImmutableArray());
+    private static BaseToken CreateJsonArray(IEnumerable<BaseToken> it) =>
+        new ArrayToken(it.ToImmutableArray());
 }

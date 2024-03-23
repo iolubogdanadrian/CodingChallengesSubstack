@@ -1,10 +1,29 @@
-﻿using Pidgin;
+﻿using CodingChallenges.ConverterJson.Services.Parsers;
+using Pidgin;
 using static Pidgin.Parser<char>;
 using static Pidgin.Parser;
 
+#pragma warning disable CS8321 // Local function is declared but never used
+#pragma warning disable CS0162 // Unreachable code detected
 
-var result = StringToken().ParseOrThrow(".");
-Console.WriteLine(result);
+// ReSharper disable All
+
+
+// var result = StringToken().ParseOrThrow(".");
+var result = new StringParser().GetToken().Parse("\" \"");
+if (result.Success)
+{
+    Console.WriteLine("Success");
+    var value = result.Value.Show();
+    Console.WriteLine(value);
+}
+else
+{
+    Console.WriteLine("Failed");
+    var resultError = result.Error;
+    Console.WriteLine(resultError);
+}
+
 Console.ReadLine();
 return;
 

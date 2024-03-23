@@ -7,8 +7,8 @@ namespace CodingChallenges.ConverterJson.Services.Parsers;
 
 public class BoolParser : ITokenParser
 {
-    public Parser<char, Json> GetToken() => BoolToken()
-        .Select(it => (Json) new JsonBool(it))
+    public Parser<char, BaseToken> GetToken() => BoolToken()
+        .Select(it => (BaseToken) new BoolToken(it))
         .Labelled("JsonBoolType");
 
     public Parser<char, bool> BoolToken()

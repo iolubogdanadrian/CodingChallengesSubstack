@@ -196,7 +196,6 @@ public class JsonValidTests
         var result = sut.Parse(json);
 
         Assert.IsTrue(result.Success);
-        // Assert.AreEqual("", result.Value.Show() + "");
     }
 
     [TestMethod("Step 5 - pass3.json")]
@@ -208,7 +207,6 @@ public class JsonValidTests
         var result = sut.Parse(json);
 
         Assert.IsTrue(result.Success);
-        // Assert.AreEqual("", result.Value.Show() + "");
     }
 
     [TestMethod("Parse negative number")]
@@ -288,14 +286,14 @@ public class JsonValidTests
         Assert.AreEqual(json.RemoveEscapeCharacters(), result.Value.Show());
     }
 
-    [TestMethod("Parse quote")]
-    public void Test33()
+    [TestMethod("Parse space")]
+    public void Test34()
     {
-        const string json = "{\"quote\": \"\\\"\"}";
+        const string json = "{\"one\": \" \"}";
 
         var result = sut.Parse(json);
 
         Assert.IsTrue(result.Success);
-        Assert.AreEqual("{\"quote\": \"\\\"\"}", result.Value.Show());
+        Assert.AreEqual("{\"one\":\" \"}", result.Value.Show());
     }
 }

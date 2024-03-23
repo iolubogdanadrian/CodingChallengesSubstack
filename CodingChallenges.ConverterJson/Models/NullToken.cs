@@ -1,6 +1,6 @@
 ﻿namespace CodingChallenges.ConverterJson.Models;
 
-public class JsonNull : Json
+public class NullToken : BaseToken
 {
     public override object Show() => "null";
 }

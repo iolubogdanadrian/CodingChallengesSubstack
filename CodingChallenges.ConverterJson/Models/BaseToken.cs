@@ -1,6 +1,6 @@
 ﻿namespace CodingChallenges.ConverterJson.Models;
 
-public abstract class Json
+public abstract class BaseToken
 {
     public abstract object Show();
 }

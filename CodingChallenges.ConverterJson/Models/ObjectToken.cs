@@ -2,14 +2,9 @@
 
 namespace CodingChallenges.ConverterJson.Models;
 
-public class JsonObject : Json
+public class ObjectToken(FifoDictionary<string, BaseToken> members) : BaseToken
 {
-    public FifoDictionary<string, Json> Members { get; }
-
-    public JsonObject(FifoDictionary<string, Json> members)
-    {
-        Members = members;
-    }
+    public FifoDictionary<string, BaseToken> Members { get; } = members;
 
     public override object Show()
     {

@@ -5,5 +5,5 @@ namespace CodingChallenges.ConverterJson.Contracts;
 
 public interface ITokenParser
 {
-    Parser<char, Json> GetToken();
+    Parser<char, BaseToken> GetToken();
 }

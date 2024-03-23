@@ -9,8 +9,8 @@ namespace CodingChallenges.ConverterJson.Services.Parsers;
 
 public class NumericParser : ITokenParser
 {
-    public Parser<char, Json> GetToken() => NumericToken()
-        .Select(it => (Json) new JsonNumeric(it))
+    public Parser<char, BaseToken> GetToken() => NumericToken()
+        .Select(it => (BaseToken) new NumericToken(it))
         .Labelled("JsonNumericType");
 
     //

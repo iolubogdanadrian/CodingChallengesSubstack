@@ -2,27 +2,51 @@
 using CodingChallenges.ConverterJson.Models;
 using Pidgin;
 using static Pidgin.Parser;
-using static Pidgin.Parser<char>;
 
 namespace CodingChallenges.ConverterJson.Services.Parsers;
 
+/*
+    A string is a sequence of zero or more Unicode characters, wrapped in double quotes, using backslash escapes.
+ */
 public class StringParser : ITokenParser
 {
-    public Parser<char, Json> GetToken() => StringToken()
-        .Select<Json>(s => new JsonString(s))
+    public Parser<char, BaseToken> GetToken() => StringToken()
+        .Select<BaseToken>(s => new StringToken(s))
         .Labelled("JsonStringType");
 
     //
 
-    private Parser<char, string> StringToken() => Token(c => c != '"')
-        .ManyString()
-        .Between(Quote);
+    private Parser<char, string> StringToken()
+    {
+        var escapeChar = Char('\\')
+            .Then(
+                _ =>
+                    OneOf(
+                        Char('"').Select(_ => '"'),
+                        Char('\\').Select(_ => '\\'),
+                        Char('/').Select(_ => '/'),
+                        Char('b').Select(_ => '\b'),
+                        Char('f').Select(_ => '\f'),
+                        Char('n').Select(_ => '\n'),
+                        Char('r').Select(_ => '\r'),
+                        Char('t').Select(_ => '\t'),
+                        UnicodeEscape
+                    )
+            );
 
-    private static Parser<char, char> Quote => Tok('"');
+        var stringChar = escapeChar.Or(AnyCharExcept('"', '\\'));
 
-    private static Parser<char, char> Tok(char value)
-        => Tok(Char(value));
+        return stringChar
+            .ManyString()
+            .Between(Quote)
+            .Select(chars => new string(chars));
+    }
 
-    private static Parser<char, T> Tok<T>(Parser<char, T> parser)
-        => parser.Before(SkipWhitespaces);
+    private static readonly Parser<char, char> UnicodeEscape = Char('u')
+        .Then(_ => HexDigit.Repeat(4))
+        .Select(hexDigits => (char) Convert.ToInt32(new string((char[]?) hexDigits), 16));
+
+    private static readonly Parser<char, char> HexDigit = Digit.Or(OneOf('A', 'B', 'C', 'D', 'E', 'F', 'a', 'b', 'c', 'd', 'e', 'f'));
+
+    private static readonly Parser<char, char> Quote = Char('"');
 }
