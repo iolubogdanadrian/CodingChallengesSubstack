@@ -42,12 +42,12 @@ public class StringTokenTests
     {
         const string INPUT = "\" \\ \"";
 
-        var result = sut.GetToken().Parse(INPUT);
+        var result = sut.StringToken().Parse(INPUT);
 
         if (result.Success)
         {
             Assert.IsTrue(result.Success);
-            Assert.AreEqual(INPUT, result.Value.Show());
+            Assert.AreEqual(INPUT, result.Value);
         }
         else
         {
